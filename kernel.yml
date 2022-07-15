@@ -1,0 +1,47 @@
+name: "https-android.googlesource.com-platform-prebuilts-clang-host-linux-x86-refs-heads-android11-rele."              # Description of the workflow.
+
+on:
+
+  push:
+
+    branches:    https-android.googlesource.com-platform-prebuilts-clang-host-linux-x86-refs-heads-android11-rele                               # Branch to build.
+
+  workflow_dispatch:                                  # Allow to manually trigger workflow.
+
+jobs:
+
+  build:
+
+    name: "https-android.googlesource.com-platform-prebuilts-clang-host-linux-x86-refs-heads-android11-rele"
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: "Checkout kernel source"                  # Clone the kernel source.
+
+      uses: actions/checkout@v2
+
+    - name: "Checkout zipper"                         # (OPTIONAL) Clone the AnyKernel3 template.
+
+      uses: actions/checkout@v2
+
+      with:
+
+        repository: infinixs5lite/AnyKernel3             # Your own AnyKernel3 repository.
+
+        path: zipper                                  # Clone to path "zipper", REQUIRED.
+
+    - name: "Android kernel build"                    # Build kernel with lemniskett/android-kernel-actions.
+
+      uses: infinixs5lite/android-kernel-actions@master
+
+      with:
+
+        arch: arm64                                   # Specify arch
+
+        compiler: gcc/9                               # Specify toolchain to use
+
+        defconfig: X688B_defconfig                    # Specify defconfig to use
+
+        image: Image.gz-dtb
